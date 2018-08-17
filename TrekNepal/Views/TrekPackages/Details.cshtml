@@ -1,0 +1,66 @@
+﻿@model TrekNepal.Models.TrekPackage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TrekPackage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageDuration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DurationInWord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DurationInWord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Difficulty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Difficulty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PackagePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackagePrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

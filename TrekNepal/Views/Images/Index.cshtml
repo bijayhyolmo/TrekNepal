@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TrekNepal.Models.Image>
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="col-lg-3 col-md-4 col-xs-6">
+        <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="@item.ImageLinks" alt="">
+        </a>
+        @Html.CheckBoxFor(x => item.Featured);
+    </div>
+}
