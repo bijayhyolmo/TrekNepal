@@ -1,0 +1,27 @@
+﻿@model TrekNepal.Models.AboutUsContent
+<form action="/admin/saveaboutus" class="form-horizontal" method="post" enctype="multipart/form-data">
+    <div class="col-md-12">
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group row">
+            @Html.TextBoxFor(model => model.Heading, new { @class = "form-control col-md-4 radius-none", placeholder = "Heading ..." })
+            @if (Model.Id > 0)
+            {
+                @Html.EditorFor(model => model.Order, new { @class = "form-control col-md-1 radius-none", placeholder = "Eg: 1" })
+            }
+            else
+            {
+                @Html.HiddenFor(model => model.Order)
+            }
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.Content, new { @class = "form-control radius-none", @rows = 7, placeholder = "Content ..." })
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-sm btn-success" type="submit">
+                <i class="fa fa-dot-circle-o"></i> Save
+            </button>
+        </div>
+    </div>
+</form>

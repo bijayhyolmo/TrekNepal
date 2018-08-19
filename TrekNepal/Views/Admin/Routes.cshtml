@@ -1,0 +1,93 @@
+﻿@model IEnumerable<TrekNepal.Models.TrekRoute>
+
+<div class="row">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="#" data-href="@Url.Action("SaveRoute", new { id = 0, packageId = @ViewBag.packageId })" class="btn-modify">
+                        <i class="fa fa-plus-circle"></i> Add new
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @if (Model != null)
+                            {
+                                <div class="row">
+                                    @foreach (var route in Model)
+                                    {
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    @route.From - @route.To
+                                                    <div class="card-header-actions">
+                                                        <a class="card-header-action btn-setting btn-modify" data-href="@Url.Action("SaveRoute", new { id = route.Id, packageId = 0 })" href="#">
+                                                            <i class="icon-settings"></i>
+                                                        </a>
+                                                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
+                                                            <i class="icon-arrow-up"></i>
+                                                        </a>
+                                                        <a class="card-header-action btn-close" href="#">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body collapse show" id="collapseExample">
+                                                    <p>Elevation: @route.Elevation</p>
+                                                    <p>Info:@route.RouteDescription</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div> No Routes yet</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button hidden id="modalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+</button>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content card">
+
+            <!-- Modal Header -->
+            <div class="modal-header card-header">
+                <i class="fa fa-route"></i> Make Changes to Route
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" style="width:2.5rem; height:2.5rem;border-radius: 50%" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".btn-modify").on("click", function () {
+        var url = $(this).data("href");
+        $(".modal-body").load(url);
+        $("#modalBtn").trigger("click");
+    });
+</script>

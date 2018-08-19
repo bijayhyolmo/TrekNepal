@@ -1,0 +1,56 @@
+﻿
+@model IEnumerable<TrekNepal.Models.OnlineQuery>
+
+@{
+    ViewBag.Title = "Queries";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">Queries</li>
+</ol>
+<div class="row">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> All Queries
+                        </div>
+                        <div class="card-body">
+                            @if (Model != null)
+                            {
+                                <div class="row">
+                                    @foreach (var query in Model)
+                                    {
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    For: @query.TripName
+                                                </div>
+                                                <div class="card-body collapse show" id="collapseExample">
+                                                    Query: @query.Query
+                                                </div>
+                                                <div class="card-footer">
+                                                    <p>By: @query.FullName</p>
+                                                    <p>Email: @query.Email</p>
+                                                    <p>Phone: @query.ContactNumber</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div>No Queries yet</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

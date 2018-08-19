@@ -1,0 +1,105 @@
+﻿@model TrekNepal.Models.TrekPackage
+<div class="card">
+    <form id="package-form" class="form-horizontal" action="@Url.Action("SavePackage")" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <i class="fa fa-pencil"></i> Trek Package
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Title</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PackageTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PackageTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Type</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PackageType, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PackageType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Duration</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            @Html.EditorFor(x => x.Day, new { @class = "form-control" })
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    Day
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            @Html.EditorFor(x => x.Night, new { @class = "form-control" })
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    Night
+                                </span>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Night, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Duration (InWord)</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.DurationInWord, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DurationInWord, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Difficulty</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Difficulty, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Difficulty, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Price</label>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="number" name="PackagePrice" value="@Model.PackagePrice" class="form-control" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    $
+                                </span>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PackagePrice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Pic</label>
+                    <div class="col-md-9">
+                        <input type="file" name="image" />
+                        @Html.ValidationMessageFor(model => model.Difficulty, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-success" type="submit">
+                <i class="fa fa-dot-circle-o"></i> Submit
+            </button>
+        </div>
+    </form>
+
+    @if(Model!=null && Model.Id > 0)
+    {
+        @Html.Action("Routes", "Admin", new { @packageId = Model.Id });
+    }
+</div>
+

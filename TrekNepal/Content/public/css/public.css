@@ -1,6 +1,11 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.logo {
+    max-width:150px;
+    margin-left: 7.5%;
+}
+@media (max-width: 768px) {
+    .logo {
+        max-width: 100px;
+    }
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -102,10 +107,18 @@ textarea {
 
 @media (min-width: 1200px) {
     .intro .intro-text {
-        width: 45%;
+        width: 35%;
+    }
+    .intro-text {
+        margin-left: 10%;
     }
 }
-
+.contact-icons {
+    max-height: 1.5rem;
+}
+.header >img, .header div {
+    display: inline-block;
+}
 .section-heading {
     text-transform: uppercase;
 }
@@ -138,14 +151,29 @@ body {
     height: 75vh;
     min-height: 300px;
     background: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
 }
 
+.page-section {
+    background: linear-gradient(#a1d3de, white);
+}
+
+.intro {
+    padding: 10px 0;
+}
+
 .intro-img {
-    margin-top: 15px;
+    height: 75vh;
+    position:relative;
+}
+
+@media (max-width: 768px) {
+    .intro-img {
+        height: 72vh;
+    }
+    .intro-text {
+        background:rgba(0, 145, 251, 0.08);
+    }
 }
 
 .intro .intro-text .intro-button {
@@ -159,4 +187,96 @@ body {
     background-color: darkcyan;
     padding:1rem;
     border-radius: 0;
+}
+
+.fixed-top {
+    position: relative;
+    background-color:#314778;
+}
+.nav-link {
+    color: white;
+}
+
+.dropdown-menu {
+    margin-top: 5px;
+    background-color: #314778;
+}
+
+.nav-link.dropdown-toggle {
+    color: white;
+}
+.nav-link.dropdown-toggle:hover {
+    color: #314778;
+    background: whitesmoke;
+}
+
+.portfolio-item {
+    margin: 1rem 0;
+}
+
+.portfolio-price, .card-text {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    padding: .5rem 1.5rem;
+}
+
+.portfolio-price {
+    background-color: rgba(43, 181, 167, 0.95);
+    margin:-.2rem 0 0 -.2rem;
+}
+
+.card-body {
+    width: 103%;
+    margin: -5px;
+    padding: 1px 10px;
+    background-color: rgba(42, 176, 167, 0.95);
+    color: white;
+}
+.card-body p {
+    display: inline-block;
+}
+.card-title {
+    font-size: 1.6srem;
+}
+
+.card-durations {
+    float: right;
+}
+.group-title {
+    text-align: center;
+}
+.group-border {
+    max-width: 50px;
+    margin: -1rem auto 1rem auto;
+    border-right: 100px;
+    border-left: 100px;
+    border-top-color: initial;
+    border-right-color: rgba(49, 71, 120, -0.3);
+    border-bottom-color: rgba(49, 71, 120, 0.47);
+    border-left-color: rgba(49, 71, 120, -0.3);
+    border-top: 4px;
+    border-style: groove;
+}
+@media (min-width: 1200px) {
+    #carouselExampleIndicators {
+        margin-right: 10px;
+        box-shadow: 1px 1px 1px 1px black
+    }
+}
+#carouselExampleIndicators {
+    margin-top: -5px;
+}
+    .collapse-button {
+    margin: auto 0 auto auto;
+}
+.input-group-text {
+    min-width: 135px;
+    border-radius: 0;
+}
+input[type=submit], input[type=submit] {
+    border-radius:0;
+}
+input[type=submit] {
+    padding: 5px 50px;
 }

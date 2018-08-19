@@ -20,6 +20,10 @@ namespace TrekNepal.Models
         public DbSet<Offer> Offers { get; set; }
         public DbSet<RouteImage> RouteImages { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<OnlineQuery> Queries { get; set; }
+        public DbSet<AboutUsContent> AboutUsContents { get; set; }
 
         public static ApplicationDbContext Create()
         {

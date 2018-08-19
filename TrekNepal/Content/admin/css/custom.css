@@ -1,0 +1,14 @@
+﻿
+@media (min-width: 768px) {
+    #partial-form {
+        margin-top: -25px;
+    }
+}
+
+.card {
+    border-radius: 0;
+}
+
+.radius-none {
+    border-radius:0;
+}

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<TrekNepal.Models.AboutUsContent>
+@{
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">About Us</li>
+</ol>
+<div class="row">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>About Us</p>
+                            <hr />
+                            @if (Model != null)
+                            {
+                                foreach (var content in Model)
+                                {
+                                    <section>
+                                        <div class="form-open-hide">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <p><strong>@content.Heading </strong></p>
+                                                    <p>@content.Content</p>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="#" data-href="@Url.Action("SaveAboutUs", new { id = content.Id})" class="btn-edit">
+                                                        <i class="fa fa-pencil"></i> Edit
+                                                    </a>
+                                                    <a href="@Url.Action("DelAboutUs", new { id = content.Id})">
+                                                        <i class="fa fa-close"></i> Del
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-open-show" style="display:none;">
+                                            <a href="#" class="btn-close">
+                                                <i class="fa fa-close"></i> Cancel
+                                            </a>
+                                            <div class="edit-form"></div>
+                                        </div>
+                                    </section>
+                                }
+                            }
+                            <div id="new-form" style="display:none;">
+                                <a href="#" class="btn-close">
+                                    <i class="fa fa-close"></i> Cancel
+                                </a>
+                                <div id="form-body"></div>
+                            </div>
+                            <a id="addNew" href="#" data-href="@Url.Action("SaveAboutUs", new { id = 0})" class="btn-add">
+                                <i class="fa fa-plus-circle"></i> Add new
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".btn-add").on("click", function () {
+        var url = $(this).data("href");
+        if (url != null) {
+            $("#new-form").show();
+            $("#form-body").load(url);
+        }
+    });
+
+    $(".btn-edit").on("click", function () {
+        var url = $(this).data("href");
+        var texts = $(this).parent().parent().parent();
+        var forms = texts.siblings(".form-open-show");
+        if (url != null) {
+            forms.children(".edit-form").load(url);
+            texts.hide();
+            forms.show();
+        }
+    });
+    $(".btn-close").on("click", function () {
+        var forms = $(this).parent();
+        var texts = forms.siblings(".form-open-hide");
+        texts.show();
+        forms.hide();
+        $("#new-form").hide();
+    });
+</script>
+

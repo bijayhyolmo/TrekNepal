@@ -1,0 +1,80 @@
+﻿@model IEnumerable<TrekNepal.Models.TrekPackage>
+
+@{
+    ViewBag.Title = "Packages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">Packages</li>
+</ol>
+<div class="row">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a id="addNew" href="#" data-href="@Url.Action("SavePackage", new { id = 0})" class="btn-modify">
+                        <i class="fa fa-plus-circle"></i> Add new
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> All Packages
+                        </div>
+                        <div class="card-body">
+                            @if (Model != null)
+                            {
+                                foreach (var group in Model.GroupBy(x => x.PackageType).ToList())
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-12"><h4>@group.Key</h4>
+                                        <hr/></div>
+                                        @foreach (var package in group)
+                                        {
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        @package.PackageTitle
+                                                        <div class="card-header-actions">
+                                                            <a class="card-header-action btn-setting btn-modify" data-href="@Url.Action("SavePackage", new { @id = package.Id})" href="#">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body collapse show" id="collapseExample">
+                                                        <img class="img-fluid mb-3 mb-lg-0" src="@package.FeaturedImage" />
+                                                        <p>@package.DurationInWord</p>
+                                                        <p>@package.PackagePrice</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div>No Packages yet</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="partial-form"></div>
+</div>
+<script>
+    $(".btn-modify").on("click", function () {
+        var url = $(this).data("href");
+        $(".container-fluid").addClass("col-lg-8");
+        if (url != null) {
+            $("#partial-form").addClass("col-lg-4");
+            $("#partial-form").load(url);
+        }
+    });
+</script>

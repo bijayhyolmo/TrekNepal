@@ -13,7 +13,9 @@ namespace TrekNepal.Models
 
         public string PackageType { get; set; }
 
-        public int PackageDuration { get; set; }
+        public int Night { get; set; }
+
+        public int Day { get; set; }
 
         public string DurationInWord { get; set; }
 
@@ -21,9 +23,14 @@ namespace TrekNepal.Models
 
         public double PackagePrice { get; set; }
 
+        public string FeaturedImage { get; set; }
+
         public virtual List<TrekRoute> RouteDetails { get; set; }
 
         public virtual List<PackageOffer> Offers { get; set; }
+
+        public virtual List<Booking> Bookings { get; set; }
+
     }
 
     public class PackageOffer
@@ -46,6 +53,8 @@ namespace TrekNepal.Models
 
         public string Offers { get; set; }
 
+        public string Description { get; set; }
+
         public virtual List<PackageOffer> Packages { get; set; }
     }
 
@@ -55,7 +64,9 @@ namespace TrekNepal.Models
 
         public int Order { get; set; }
 
-        public string Location { get; set; }
+        public string From { get; set; }
+
+        public string To { get; set; }
 
         public string RouteDescription { get; set; }
 
@@ -106,15 +117,23 @@ namespace TrekNepal.Models
 
         public string ContactNumber { get; set; }
 
+        public string AlternateNumber { get; set; }
+
         public int NumberOfPeople { get; set; }
 
         public DateTime BookedDate { get; set; }
 
         public Nullable<DateTime> BookFor { get; set; }
+
+        public bool Cleared { get; set; }
+
+        public virtual TrekPackage Package { get; set; }
     }
 
     public class Setting
     {
+        public int Id { get; set; }
+
         public string Currency { get; set; }
 
         public string ViberNumber { get; set; }
@@ -127,6 +146,11 @@ namespace TrekNepal.Models
 
         public string TwitterLink { get; set; }
 
-        public string InstaLsink { get; set; }
+        public string InstaLink { get; set; }
+
+        public string Location { get; set; }
+
+        public string DetailedLocation { get; set; }
+
     }
 }

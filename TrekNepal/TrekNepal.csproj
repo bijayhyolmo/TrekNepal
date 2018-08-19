@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -205,22 +206,59 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808120521141_InitialCreate.cs" />
-    <Compile Include="Migrations\201808120521141_InitialCreate.Designer.cs">
-      <DependentUpon>201808120521141_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201808182127504_v0.1.cs" />
+    <Compile Include="Migrations\201808182127504_v0.1.Designer.cs">
+      <DependentUpon>201808182127504_v0.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808190312204_v0.2.cs" />
+    <Compile Include="Migrations\201808190312204_v0.2.Designer.cs">
+      <DependentUpon>201808190312204_v0.2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808190313083_v0.3.cs" />
+    <Compile Include="Migrations\201808190313083_v0.3.Designer.cs">
+      <DependentUpon>201808190313083_v0.3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808191117274_v0.4.cs" />
+    <Compile Include="Migrations\201808191117274_v0.4.Designer.cs">
+      <DependentUpon>201808191117274_v0.4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808191323334_v0.5.cs" />
+    <Compile Include="Migrations\201808191323334_v0.5.Designer.cs">
+      <DependentUpon>201808191323334_v0.5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808191441558_v0.6.cs" />
+    <Compile Include="Migrations\201808191441558_v0.6.Designer.cs">
+      <DependentUpon>201808191441558_v0.6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AboutUsContent.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OnlineQuery.cs" />
     <Compile Include="Models\TrekContext.cs" />
     <Compile Include="Models\TrekPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\PackageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin\css\custom.css" />
+    <Content Include="Content\admin\css\style.css" />
+    <Content Include="Content\admin\js\main.js" />
     <Content Include="Content\images\logo.png" />
-    <Content Include="Content\public.css" />
+    <Content Include="Content\images\nepal-trekking-route-map.jpg" />
+    <Content Include="Content\images\trek1.jpg" />
+    <Content Include="Content\images\trek2.jpg" />
+    <Content Include="Content\images\trek3.jpg" />
+    <Content Include="Content\images\trek4.jpeg" />
+    <Content Include="Content\images\viber.png" />
+    <Content Include="Content\images\what.png" />
+    <Content Include="Content\vendor\%40coreui\coreui-plugin-chartjs-custom-tooltips\js\custom-tooltips.min.js" />
+    <Content Include="Content\vendor\%40coreui\coreui\js\coreui.min.js" />
+    <Content Include="Content\vendor\%40coreui\icons\css\coreui-icons.min.css" />
+    <Content Include="Content\vendor\%40coreui\icons\fonts\CoreUI-Icons-Linear-Free.svg" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -231,6 +269,8 @@
     <Content Include="Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\vendor\jquery\jquery.js" />
     <Content Include="Content\vendor\jquery\jquery.min.js" />
     <Content Include="Content\vendor\jquery\jquery.slim.js" />
@@ -238,7 +278,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\public\css\public.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -250,6 +290,16 @@
     <Content Include="Content\vendor\bootstrap\js\bootstrap.min.js.map" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\vendor\%40coreui\coreui-plugin-chartjs-custom-tooltips\js\custom-tooltips.min.js.map" />
+    <Content Include="Content\vendor\%40coreui\coreui\js\coreui.min.js.map" />
+    <Content Include="Content\vendor\%40coreui\icons\css\coreui-icons.min.css.map" />
+    <Content Include="Content\vendor\%40coreui\icons\fonts\CoreUI-Icons-Linear-Free.eot" />
+    <Content Include="Content\vendor\%40coreui\icons\fonts\CoreUI-Icons-Linear-Free.ttf" />
+    <Content Include="Content\vendor\%40coreui\icons\fonts\CoreUI-Icons-Linear-Free.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -267,10 +317,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -293,7 +340,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_PublicLayout.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\TrekPackages\Create.cshtml" />
     <Content Include="Views\TrekPackages\Delete.cshtml" />
     <Content Include="Views\TrekPackages\Details.cshtml" />
@@ -312,9 +358,29 @@
     <Content Include="Views\Images\Edit.cshtml" />
     <Content Include="Views\Images\Index.cshtml" />
     <Content Include="Views\Images\UploadImage.cshtml" />
+    <Content Include="Views\Shared\_PublicNavigation.cshtml" />
+    <Content Include="Views\Public\PackageDetail.cshtml" />
+    <Content Include="Views\Admin\DashBoard.cshtml" />
+    <Content Include="Views\Shared\_AdminHeader.cshtml" />
+    <Content Include="Views\Shared\_AdminSideBar.cshtml" />
+    <Content Include="Views\Admin\Packages.cshtml" />
+    <Content Include="Views\Admin\Offers.cshtml" />
+    <Content Include="Views\Admin\SavePackage.cshtml" />
+    <Content Include="Views\Admin\SaveOffer.cshtml" />
+    <Content Include="Views\Admin\Bookings.cshtml" />
+    <Content Include="Views\Admin\GetBookingDetail.cshtml" />
+    <Content Include="Views\Admin\Routes.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Public\ContactUs.cshtml" />
+    <Content Include="Views\Public\AboutUs.cshtml" />
+    <Content Include="Views\Admin\AboutUs.cshtml" />
+    <Content Include="Views\Admin\SaveAboutUs.cshtml" />
+    <Content Include="Views\Admin\Queries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\public\js\" />
+    <Folder Include="Content\savedImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -324,8 +390,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808120521141_InitialCreate.resx">
-      <DependentUpon>201808120521141_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808182127504_v0.1.resx">
+      <DependentUpon>201808182127504_v0.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808190312204_v0.2.resx">
+      <DependentUpon>201808190312204_v0.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808190313083_v0.3.resx">
+      <DependentUpon>201808190313083_v0.3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808191117274_v0.4.resx">
+      <DependentUpon>201808191117274_v0.4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808191323334_v0.5.resx">
+      <DependentUpon>201808191323334_v0.5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808191441558_v0.6.resx">
+      <DependentUpon>201808191441558_v0.6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

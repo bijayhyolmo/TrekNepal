@@ -1,0 +1,13 @@
+﻿@model IEnumerable<TrekNepal.Models.AboutUsContent>
+@{
+    ViewBag.Title = "AboutUs";
+}
+<h2>AboutUs</h2>
+@if (Model != null )
+{
+    foreach(var content in Model)
+    {
+        <h4>@content.Heading</h4>
+        <p>@content.Content</p>
+    }
+}

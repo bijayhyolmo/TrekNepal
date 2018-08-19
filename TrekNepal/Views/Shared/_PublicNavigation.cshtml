@@ -1,0 +1,88 @@
+﻿@using TrekNepal.ViewModels
+@model IEnumerable<MenuViewModel>
+
+@if (Model != null && Model.Any())
+{
+    if (Model.Any(x => x.ParentId > 0))
+    {
+        foreach (var menu in Model)
+        {
+            <li class="dropdown-item">
+                @if (menu.SubMenus != null && menu.SubMenus.Any())
+                {
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @menu.DisplayText
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                        @Html.Partial("_PublicNavigation", menu.SubMenus)
+                    </ul>
+                }
+                else
+                {
+                    <a href="@menu.TargetUrl">@menu.DisplayText</a>
+                }
+            </li>
+        }
+    }
+    else
+    {
+        <div class="header">
+            <img class="img-fluid logo" src="~/Content/images/logo.png" />
+            <div class="img-fluid contact-icons">
+                <img class="img-fluid contact-icons" src="~/Content/images/viber.png" />
+                <img class="img-fluid contact-icons" src="~/Content/images/what.png" />
+            </div>
+        </div>
+        <nav class="navbar fixed-top navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" style="position:absolute" href="index.html">
+                    @*<img class="img-fluid" src="~/Content/images/logo.png" />*@
+                </a>
+                <button class="navbar-toggler navbar-toggler-right collapse-button" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        @foreach (var menu in Model)
+                        {
+                            if (menu.SubMenus != null && menu.SubMenus.Any())
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @menu.DisplayText
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                                        @Html.Partial("_PublicNavigation", menu.SubMenus)
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@menu.TargetUrl">@menu.DisplayText</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+}
+else
+{
+    @Html.Partial("_PublicNavigation", new MenuViewModel().GetMenus())
+}
+
+@*<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Portfolio
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+            <a class="dropdown-item" href="portfolio-1-col.html">1 Column Portfolio</a>
+            <a class="dropdown-item" href="portfolio-2-col.html">2 Column Portfolio</a>
+            <a class="dropdown-item" href="portfolio-3-col.html">3 Column Portfolio</a>
+            <a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a>
+            <a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a>
+        </div>
+    </li>*@

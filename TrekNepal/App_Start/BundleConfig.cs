@@ -8,23 +8,28 @@ namespace TrekNepal
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/adminjs").Include(
+                "~/Content/vendor/jquery/jquery.js",
+                "~/Content/vendor/bootstrap/js/bootstrap.bundle.js",
+                "~/Content/vendor/@coreui/coreui/js/coreui.min.js",
+                "~/Content/admin/js/main.js"
+                ));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            bundles.Add(new StyleBundle("~/bundles/admincss").Include(
+                      "~/Content/vendor/@coreui/cssicons/css/coreui-icons.min.css",
+                      "~/Content/vendor/font-awesome/css/font-awesome.min.css",
+                      "~/Content/vendor/bootstrap/css/bootstrap.css",
+                      "~/Content/admin/css/style.css",
+                      "~/Content/admin/css/custom.css"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/publicjs").Include(
+                "~/Content/vendor/jquery/jquery.slim.js",
+                "~/Content/vendor/bootstrap/js/bootstrap.bundle.js"
+                ));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/bundles/publiccss").Include(
+                    "~/Content/vendor/bootstrap/css/bootstrap.css",
+                      "~/Content/public/css/public.css"));
         }
     }
 }
