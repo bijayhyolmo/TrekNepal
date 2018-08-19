@@ -226,16 +226,16 @@ body {
     margin:-.2rem 0 0 -.2rem;
 }
 
-.card-body {
+.portfolio-item .card-body {
     width: 103%;
     margin: -5px;
     padding: 1px 10px;
     background-color: rgba(42, 176, 167, 0.95);
     color: white;
 }
-.card-body p {
-    display: inline-block;
-}
+.portfolio-item .card-body p {
+        display: inline-block;
+    }
 .card-title {
     font-size: 1.6srem;
 }
@@ -280,3 +280,8 @@ input[type=submit], input[type=submit] {
 input[type=submit] {
     padding: 5px 50px;
 }
+.main {
+    margin: 15px;
+    padding:15px;
+}
+

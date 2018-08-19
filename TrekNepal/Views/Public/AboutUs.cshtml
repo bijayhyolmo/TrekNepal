@@ -2,12 +2,27 @@
 @{
     ViewBag.Title = "AboutUs";
 }
-<h2>AboutUs</h2>
-@if (Model != null )
-{
-    foreach(var content in Model)
-    {
-        <h4>@content.Heading</h4>
-        <p>@content.Content</p>
-    }
-}
+<div class="main">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">About Us</div>
+                        <div class="card-body">
+                            @if (Model != null)
+                            {
+                                foreach (var content in Model)
+                                {
+                                    <strong>@content.Heading</strong>
+                                    <p>@content.Content</p>
+                                    <br />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
