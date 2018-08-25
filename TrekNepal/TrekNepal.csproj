@@ -369,13 +369,14 @@
     <Content Include="Views\Admin\SaveOffer.cshtml" />
     <Content Include="Views\Admin\Bookings.cshtml" />
     <Content Include="Views\Admin\GetBookingDetail.cshtml" />
-    <Content Include="Views\Admin\Routes.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Public\ContactUs.cshtml" />
     <Content Include="Views\Public\AboutUs.cshtml" />
     <Content Include="Views\Admin\AboutUs.cshtml" />
     <Content Include="Views\Admin\SaveAboutUs.cshtml" />
     <Content Include="Views\Admin\Queries.cshtml" />
+    <Content Include="Views\Admin\SaveRoute.cshtml" />
+    <Content Include="Views\Admin\Routes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,9 +1,9 @@
-﻿@model TrekNepal.Models.TrekPackage
+﻿@using TrekNepal.Models;
+@model TrekPackage
 <div class="card">
     <form id="package-form" class="form-horizontal" action="@Url.Action("SavePackage")" method="post" enctype="multipart/form-data">
         <div class="card-body">
             @Html.AntiForgeryToken()
-
             <div class="form-horizontal">
                 <i class="fa fa-pencil"></i> Trek Package
                 <hr />
@@ -96,10 +96,46 @@
             </button>
         </div>
     </form>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" data-href="@Url.Action("SaveRoute", new { @index = -1, @packageId = Model.Id })" class="btn-modify">
+                <i class="fa fa-plus-circle"></i> Add new
+            </a>
+        </div>
+    </div>
 
-    @if(Model!=null && Model.Id > 0)
-    {
-        @Html.Action("Routes", "Admin", new { @packageId = Model.Id });
-    }
+    <div id="tempRoutes">
+        @{Html.RenderAction("Routes");}
+    </div>
+    
+
+    <button hidden id="modalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Open modal
+    </button>
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content card">
+
+                <!-- Modal Header -->
+                <div class="modal-header card-header">
+                    <i class="fa fa-route"></i> Make Changes to Route
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(".btn-modify").on("click", function () {
+        var url = $(this).data("href");
+        $(".modal-body").load(url);
+        $("#modalBtn").trigger("click");
+    });
+</script>
 

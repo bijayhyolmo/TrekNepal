@@ -1,0 +1,97 @@
+﻿@model TrekNepal.Models.TrekRoute
+<form id="routeForm" action="@Url.Action("SaveRoute","Admin")" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>TrekRoute</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    @Html.EditorFor(x => x.Order, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            Order
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    @Html.EditorFor(x => x.Elevation, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            Elevation
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    @Html.EditorFor(x => x.From, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            From
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    @Html.EditorFor(x => x.To, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            To
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Route Description</label>
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.RouteDescription, new { @class = "form-control", rows = 7, @style = "width: inherit" })
+                @Html.ValidationMessageFor(model => model.RouteDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Activities</label>
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.Activities, new { @class = "form-control", rows = 7, @style = "width: inherit" })
+                @Html.ValidationMessageFor(model => model.Activities, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.TrekPackageId)
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" style="width:2.5rem; height:2.5rem;border-radius: 50%" class="btn btn-success"><i class="fa fa-check"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $("#routeForm").submit(function (e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                $("#tempRoutes").load("@Url.Action("Routes")");
+                $(".modal-body").html("");
+                $("#modalBtn").trigger("click");
+            }
+        });
+    });
+</script>

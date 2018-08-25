@@ -13,6 +13,7 @@ namespace TrekNepal.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;
+        private Dictionary<int, TrekRoute> _stop;
         public AdminController()
         {
             _context = ApplicationDbContext.Create();
@@ -31,9 +32,20 @@ namespace TrekNepal.Controllers
 
         public async Task<ActionResult> SavePackage(int id)
         {
+            TempData["TempRoutes"] = null;
+            TempData["selectedIndex"] = null;
             if (id > 0)
             {
                 var package = await _context.Packages.FindAsync(id);
+                if (package.RouteDetails.Any())
+                {
+                    var routes = new Dictionary<int, TrekRoute>();
+                    for (var i = 0; i < package.RouteDetails.Count; i++)
+                    {
+                        routes.Add(i, package.RouteDetails[i]);
+                    }
+                    TempData["TempRoutes"] = routes;
+                }
                 return PartialView(package);
             }
             else
@@ -45,25 +57,63 @@ namespace TrekNepal.Controllers
         [HttpPost]
         public async Task<ActionResult> SavePackage(TrekPackage trekPackage, HttpPostedFileBase image)
         {
-            if (image.ContentLength > 0)
+            if (image != null && image.ContentLength > 0)
             {
                 var filename = Path.GetFileName(image.FileName);
                 var path = Path.Combine(Server.MapPath("~/Content/savedImages"), filename);
                 image.SaveAs(path);
-                trekPackage.FeaturedImage = "/Content/savedImages/"+filename;
+                trekPackage.FeaturedImage = "/Content/savedImages/" + filename;
             }
             if (trekPackage.Id > 0)
             {
-                _context.Entry(trekPackage).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                var tempData = Session[0] as Dictionary<int, TrekRoute>;
+                await _context.Routes.Where(x => x.TrekPackageId == trekPackage.Id).ForEachAsync((x) =>
+                {
+                    _context.Entry(x).State = EntityState.Deleted;
+                    _context.SaveChanges();
+                });
+                trekPackage.RouteDetails = tempData.Select(x => new TrekRoute
+                {
+                    Id = 0,
+                    From = x.Value.From,
+                    To = x.Value.To,
+                    Elevation = x.Value.Elevation,
+                    Activities = x.Value.Activities,
+                    Order = x.Value.Order,
+                    RouteDescription = x.Value.RouteDescription,
+                    TrekPackageId = x.Value.TrekPackageId,
+                }).ToList();
+                using (var context = ApplicationDbContext.Create())
+                {
+                    context.Entry(trekPackage).State = EntityState.Modified;
+                    await context.SaveChangesAsync();
+                }
+                TempData["TempRoutes"] = null;
+                TempData["selectedIndex"] = null;
+                Session.Clear();
                 return RedirectToAction("Packages");
             }
             else
             {
                 if (ModelState.IsValid)
                 {
+                    var tempData = Session[0] as Dictionary<int, TrekRoute>;
+                    trekPackage.RouteDetails = tempData.Select(x => new TrekRoute
+                    {
+                        Id = x.Value.Id,
+                        From = x.Value.From,
+                        To = x.Value.To,
+                        Elevation = x.Value.Elevation,
+                        Activities = x.Value.Activities,
+                        Order = x.Value.Order,
+                        RouteDescription = x.Value.RouteDescription,
+                        TrekPackageId = x.Value.TrekPackageId,
+                    }).ToList();
                     _context.Packages.Add(trekPackage);
                     await _context.SaveChangesAsync();
+                    TempData["TempRoutes"] = null;
+                    TempData["selectedIndex"] = null;
+                    Session.Clear();
                     return RedirectToAction("Packages");
                 }
                 else
@@ -73,48 +123,75 @@ namespace TrekNepal.Controllers
             }
         }
 
-        public async Task<ActionResult> Routes(int packageId)
-        {
-            ViewBag.packageId = packageId;
-            var routes = _context.Routes.Where(x => x.TrekPackageId == packageId).ToList();
-            return PartialView(routes);
-        }
 
-        public async Task<ActionResult> SaveRoute(int id, int packageId)
+        public async Task<ActionResult> SaveRoute(int index, int packageId)
         {
-            if (id > 0)
+            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
+            if (Session.Count > 0)
             {
-                var route = _context.Routes.FindAsync(id);
-                return PartialView(route);
+                var temp = Session[0] as Dictionary<int, TrekRoute>;
+                if (temp != null)
+                {
+                    tempData = temp;
+                }
+            }
+            if (tempData == null)
+            {
+                tempData = new Dictionary<int, TrekRoute>();
+            }
+            var route = new TrekRoute();
+            if (tempData.Any())
+            {
+                route.TrekPackageId = packageId;
+                if (tempData.ContainsKey(index) && index >= 0)
+                {
+                    TempData["selectedIndex"] = index;
+                    route = tempData.First(x => x.Key == index).Value;
+                }
+                else
+                {
+                    TempData["selectedIndex"] = tempData.Count;
+                    tempData.Add(tempData.Count, route);
+                    TempData["TempRoutes"] = tempData;
+                }
             }
             else
             {
-                var route = new TrekRoute();
+                TempData["selectedIndex"] = tempData.Count;
                 route.TrekPackageId = packageId;
-                return PartialView(route);
+                tempData.Add(tempData.Count, route);
+                TempData["TempRoutes"] = tempData;
             }
+            return PartialView(route);
         }
 
         [HttpPost]
         public async Task<ActionResult> SaveRoute(TrekRoute trekRoute)
         {
-            if (trekRoute.Id > 0)
+            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
+            if (TempData["selectedIndex"] != null && ((int)TempData["selectedIndex"]) > -1)
             {
-                return PartialView(await _context.Packages.FindAsync(trekRoute.TrekPackageId));
+                int index = (int)TempData["selectedIndex"];
+                tempData[index] = trekRoute;
+                TempData["selectedIndex"] = null;
+            }
+            TempData["TempRoutes"] = tempData;
+            return PartialView();
+        }
+
+        public async Task<ActionResult> Routes()
+        {
+            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
+            TempData["TeamRoutes"] = tempData;
+            if (Session.Keys.Count > 0)
+            {
+                Session[0] = tempData;
             }
             else
             {
-                if (ModelState.IsValid)
-                {
-                    _context.Routes.Add(trekRoute);
-                    await _context.SaveChangesAsync();
-                    return PartialView();
-                }
-                else
-                {
-                    throw new Exception();
-                }
+                Session.Add("val", tempData);
             }
+            return PartialView(tempData);
         }
 
         public async Task<ActionResult> Offers()
