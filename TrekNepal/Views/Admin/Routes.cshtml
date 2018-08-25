@@ -1,8 +1,8 @@
 ﻿@using TrekNepal.Models;
 @{ 
-    var temp = (TempData["TempRoutes"] as Dictionary<int, TrekRoute>);
+    var temp = Session.Count > 0 ? Session[0] as Dictionary<int, TrekRoute>: new Dictionary<int, TrekRoute>();
 }
-@if (TempData["TempRoutes"] != null)
+@if (temp.Any())
 {
     foreach (var route in temp)
     {

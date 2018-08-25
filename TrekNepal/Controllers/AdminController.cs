@@ -13,7 +13,6 @@ namespace TrekNepal.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;
-        private Dictionary<int, TrekRoute> _stop;
         public AdminController()
         {
             _context = ApplicationDbContext.Create();
@@ -32,26 +31,21 @@ namespace TrekNepal.Controllers
 
         public async Task<ActionResult> SavePackage(int id)
         {
-            TempData["TempRoutes"] = null;
-            TempData["selectedIndex"] = null;
+            var package = new TrekPackage();
+            var routes = new Dictionary<int, TrekRoute>();
             if (id > 0)
             {
-                var package = await _context.Packages.FindAsync(id);
+                package = await _context.Packages.FindAsync(id);
                 if (package.RouteDetails.Any())
                 {
-                    var routes = new Dictionary<int, TrekRoute>();
                     for (var i = 0; i < package.RouteDetails.Count; i++)
                     {
                         routes.Add(i, package.RouteDetails[i]);
                     }
-                    TempData["TempRoutes"] = routes;
                 }
-                return PartialView(package);
             }
-            else
-            {
-                return PartialView(new TrekPackage());
-            }
+            await InitializeTempRoutes(routes);
+            return PartialView(package);
         }
 
         [HttpPost]
@@ -123,44 +117,20 @@ namespace TrekNepal.Controllers
             }
         }
 
-
         public async Task<ActionResult> SaveRoute(int index, int packageId)
         {
-            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
-            if (Session.Count > 0)
-            {
-                var temp = Session[0] as Dictionary<int, TrekRoute>;
-                if (temp != null)
-                {
-                    tempData = temp;
-                }
-            }
-            if (tempData == null)
-            {
-                tempData = new Dictionary<int, TrekRoute>();
-            }
+            var tempData = await GetTempRoutes();
             var route = new TrekRoute();
-            if (tempData.Any())
+            route.TrekPackageId = packageId;
+            if (tempData.Any() && tempData.ContainsKey(index) && index >= 0)
             {
-                route.TrekPackageId = packageId;
-                if (tempData.ContainsKey(index) && index >= 0)
-                {
-                    TempData["selectedIndex"] = index;
-                    route = tempData.First(x => x.Key == index).Value;
-                }
-                else
-                {
-                    TempData["selectedIndex"] = tempData.Count;
-                    tempData.Add(tempData.Count, route);
-                    TempData["TempRoutes"] = tempData;
-                }
+                GetSelectedIndex(index);
+                route = tempData.First(x => x.Key == index).Value;
             }
             else
             {
-                TempData["selectedIndex"] = tempData.Count;
-                route.TrekPackageId = packageId;
-                tempData.Add(tempData.Count, route);
-                TempData["TempRoutes"] = tempData;
+                GetSelectedIndex(tempData.Count);
+                await UpdateTempRoutes(false, route, -1);
             }
             return PartialView(route);
         }
@@ -168,30 +138,18 @@ namespace TrekNepal.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveRoute(TrekRoute trekRoute)
         {
-            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
-            if (TempData["selectedIndex"] != null && ((int)TempData["selectedIndex"]) > -1)
+            var index = GetSelectedIndex(-1);
+            var tempData = GetTempRoutes();
+            if (tempData != null && index > -1)
             {
-                int index = (int)TempData["selectedIndex"];
-                tempData[index] = trekRoute;
-                TempData["selectedIndex"] = null;
+                await UpdateTempRoutes(true, trekRoute, index);
             }
-            TempData["TempRoutes"] = tempData;
             return PartialView();
         }
 
         public async Task<ActionResult> Routes()
         {
-            var tempData = TempData["TempRoutes"] as Dictionary<int, TrekRoute>;
-            TempData["TeamRoutes"] = tempData;
-            if (Session.Keys.Count > 0)
-            {
-                Session[0] = tempData;
-            }
-            else
-            {
-                Session.Add("val", tempData);
-            }
-            return PartialView(tempData);
+            return PartialView();
         }
 
         public async Task<ActionResult> Offers()
@@ -350,6 +308,49 @@ namespace TrekNepal.Controllers
         public async Task<ActionResult> Queries()
         {
             return View(_context.Queries.ToList());
+        }
+
+        private async Task<Dictionary<int, TrekRoute>> GetTempRoutes()
+        {
+            if (Session.Count > 0)
+            {
+                return Session[0] as Dictionary<int, TrekRoute>;
+            }
+            return new Dictionary<int, TrekRoute>();
+        }
+
+        private async Task UpdateTempRoutes(bool edit, TrekRoute route, int index)
+        {
+
+            var value = Session[0] as Dictionary<int, TrekRoute>;
+            if (!value.Any() || edit)
+            {
+                value[index] = route;
+            }
+            else
+            {
+                value.Add(value.Count, route);
+            }
+            Session[0] = value;
+        }
+
+        private async Task InitializeTempRoutes(Dictionary<int, TrekRoute> routes)
+        {
+            Session.Clear();
+            Session.Add("routes", routes);
+        }
+
+        private int GetSelectedIndex(int index)
+        {
+            if (Session.Count < 2)
+            {
+                Session.Add("selectedIndex", -1);
+            }
+            if (index > -1)
+            {
+                Session[1] = index;
+            }
+            return (int)Session[1];
         }
     }
 }
